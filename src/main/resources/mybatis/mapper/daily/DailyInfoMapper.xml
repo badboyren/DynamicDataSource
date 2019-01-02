@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.badboy.stock.mapper.daily.IDailyInfoMapper">
+	<resultMap id="BaseResultMap" type="com.badboy.stock.bean.daily.DailyInfo">
+		<result column="open_money" property="openMoney" />	 
+		<result column="close_money" property="closeMoney" />	 
+		<result column="max_money" property="maxMoney" />	 
+		<result column="min_money" property="minMoney" />	
+		<result column="yd_money" property="ydMoney" />	
+		<result column="t_date" property="tDate" />	
+		
+	</resultMap>
+	<sql id="Base_Column_List" >
+		close_money,max_money,min_money,yd_money,t_date
+    </sql>
+    <sql id="Base_Select_Sql" >
+    </sql>
+    
+    <update id="createTable" parameterType="java.lang.String">
+    	<![CDATA[
+	       CREATE TABLE ${tableName} (
+			  open_money decimal(6, 2),
+			  close_money decimal(6, 2),
+			  max_money decimal(6, 2),
+			  min_money decimal(6, 2),
+			  yd_money decimal(6, 2),
+			  t_date date,
+			  UNIQUE INDEX t_date(t_date) USING BTREE
+			) ENGINE = InnoDB CHARACTER SET = utf8
+		 ]]>  
+    </update>
+    
+    <insert id="saveDailyInfo">
+		insert into #{tableName} (
+			<include refid="Base_Column_List"></include>
+  		 )
+		values
+		(#{dailyInfo.openMoney}, #{dailyInfo.closeMoney}, #{dailyInfo.maxMoney}, #{dailyInfo.minMoney},#{dailyInfo.ydMoney},#{dailyInfo.tDate})
+	</insert>
+    
+</mapper>

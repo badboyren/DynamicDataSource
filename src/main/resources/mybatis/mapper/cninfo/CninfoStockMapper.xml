@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.badboy.stock.mapper.cninfo.ICninfoMapper">
+	<resultMap id="BaseResultMap" type="com.badboy.stock.bean.cninfo.CninfoStockCode">
+		<result column="stock_no" property="stockNo" />	 
+		<result column="pyjc" property="pyjc" />	 
+		<result column="ssrq" property="ssrq" />	 
+		<result column="zqjc" property="zqjc" />	
+		<result column="sssc" property="sssc" />	
+		<result column="update_time" property="updateTime" />	 
+		<result column="SECCODE" property="seccode" />	
+		<result column="MARKET" property="market" />	 
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+		stock_no,pyjc,ssrq,zqjc,sssc,update_time,SECCODE,MARKET
+    </sql>
+    
+    <sql id="Base_Select_Sql" >
+    	select T.stock_no,T.pyjc,T.ssrq,T.zqjc,T.sssc,T.update_time,T.SECCODE,T.MARKET  from init_cninfo T
+    </sql>
+    
+    <insert id="saveCninfo" parameterType="com.badboy.stock.bean.cninfo.CninfoStockCode">
+		insert into init_cninfo (
+			<include refid="Base_Column_List"></include>
+  		 )
+		values
+		(#{stockNo}, #{pyjc}, #{ssrq}, #{zqjc},#{sssc}, #{updateTime}, #{seccode}, #{market})
+	</insert>
+	
+	 <insert id="saveCninfoList">
+		insert into init_cninfo (
+			<include refid="Base_Column_List"></include>
+  		 )
+		values
+		 <foreach collection="list" item="item" index="index" separator="," >
+	      (
+	        #{item.market,jdbcType=VARCHAR},
+	        #{item.pyjc,jdbcType=VARCHAR},
+	        #{item.ssrq,jdbcType=DATE},
+	        #{item.zqjc,jdbcType=VARCHAR},
+	        #{sssc,jdbcType=VARCHAR},
+	        now(),
+	        #{item.seccode,jdbcType=VARCHAR},
+	        #{item.market,jdbcType=VARCHAR}
+	     )
+	    </foreach>
+	</insert>
+	
+	<select id = "getCninfoStockCodeAll" resultMap = "BaseResultMap">
+		select * from init_cninfo 
+	</select>
+	
+</mapper>

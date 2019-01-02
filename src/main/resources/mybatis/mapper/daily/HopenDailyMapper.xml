@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.badboy.stock.mapper.daily.IHopenDailyapper">
+	<resultMap id="BaseResultMap" type="com.badboy.stock.bean.daily.HopenDaily">
+		<result column="id" property="id" />	 
+		<result column="stock_no" property="stockNo" />	 
+		<result column="t_date" property="tDate" />	 
+		<result column="yd_money" property="ydMoney" />	
+		<result column="td_money" property="tdMoney" />	
+		
+		<!-- ext -->
+		<result column="stock_name" property="stockName" />	
+		<result column="dif_Money" property="difMoney" />	
+	</resultMap>
+	<sql id="Base_Column_List" >
+		id,stock_no,t_date,yd_money,td_money
+    </sql>
+    <sql id="Base_Select_Sql" >
+    </sql>
+    <insert id="saveHopenDaily">
+		insert into h_open_daily (
+			stock_no,t_date,yd_money,td_money
+  		 )
+		values
+		(#{stockNo}, #{tDate}, #{ydMoney}, #{tdMoney})
+	</insert>
+	
+	<select id = "getHopenDailyList" resultMap = "BaseResultMap">
+		SELECT
+			hod.*,
+			ic.zqjc as stock_name,
+			(hod.td_money - hod.yd_money) as dif_Money
+		FROM
+			h_open_daily hod join init_cninfo ic on hod.stock_no = ic.stock_no
+		WHERE
+			t_date =  #{date};
+	</select>
+    
+</mapper>

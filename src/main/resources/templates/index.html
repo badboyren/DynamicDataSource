@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+function getRequest() {
+  var url = window.location.search; //获取url中"?"符后的字串
+  var theRequest = new Object();
+  if (url.indexOf("?") != -1) {
+    var str = url.substr(1);
+    strs = str.split("&");
+    for(var i = 0; i < strs.length; i ++) {
+      theRequest[strs[i].split("=")[0]]=decodeURI(strs[i].split("=")[1]);
+    }
+  }
+  return theRequest;
+}
+$(function(){
+	var stock = getRequest().stock;
+	var u = {
+			page: 1,
+			id: stock,
+			gtvolume: "",
+			sort: "asc"
+		};
+	$.ajax({
+		url: "//mdfm.eastmoney.com/EM_UBG_MinuteApi/Js/Get?dtype=all&token=44c9d251add88e27b65ed86506f6e5da&rows=144",
+		dataType: "jsonp",
+		jsonp: "cb",
+		data: u,
+		success: function(i) {
+			console.log(i);
+		} 
+	});
+});
+</script>
+</head>
+<body>
+
+</body>
+</html>

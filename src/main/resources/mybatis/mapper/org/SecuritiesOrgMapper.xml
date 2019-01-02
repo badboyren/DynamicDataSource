@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.badboy.stock.mapper.org.ISecuritiesOrgMapper">
+	<resultMap id="BaseResultMap" type="com.badboy.stock.bean.org.SecuritiesOrg">
+		<result column="id" property="id" />	 
+		<result column="org_name" property="orgName" />	 
+		<result column="pyjc" property="pyjc" />	 
+		<result column="pyjc_first" property="pyjcFirst" />	
+		<result column="update_time" property="updateTime" />	
+		<result column="org_url" property="orgUrl" />	
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+		id,org_name,pyjc,pyjc_first,update_time,org_url
+    </sql>
+    <sql id="Base_Select_Sql" >
+    </sql>
+    
+    <insert id="saveSecuritiesOrg" parameterType="com.badboy.stock.bean.org.SecuritiesOrg">
+		insert into securities_org (
+			<include refid="Base_Column_List"></include>
+  		 )
+		values
+		(null,#{orgName}, #{pyjc}, #{pyjcFirst}, #{updateTime},#{orgUrl})
+	</insert>
+	
+	
+	 <insert id="saveSecuritiesOrgList">
+		insert into securities_org (<include refid="Base_Column_List"></include>)
+		values
+		 <foreach collection="list" item="item" index="index" separator="," >
+	      (
+	      	null,
+	        #{item.orgName,jdbcType=VARCHAR},
+	        #{item.pyjc,jdbcType=VARCHAR},
+	        #{item.pyjcFirst,jdbcType=VARCHAR},
+	        now(),
+	        #{item.orgUrl,jdbcType=VARCHAR}
+	     )
+	    </foreach>
+	</insert>
+	
+</mapper>

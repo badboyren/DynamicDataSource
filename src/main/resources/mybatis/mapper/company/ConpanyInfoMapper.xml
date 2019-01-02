@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.badboy.stock.mapper.company.ICompanyInfoMapper">
+	<resultMap id="BaseResultMap" type="com.badboy.stock.bean.company.CompanyInfo">
+		<result column="id" property="id" />	
+		<result column="stock_no" property="stockNo" />
+		<result column="company_name" property="companyName" />
+		<result column="company_e_name" property="companyEName" />
+		<result column="once_name" property="onceName" />	
+		<result column="company_info" property="companyInfo" />
+		<result column="company_create_date" property="companyCreateDate" />
+		<result column="company_no" property="companyNo" />
+		<result column="company_reg_money" property="companyRegMoney" />	
+		<result column="company_legal_persion" property="companyLegalPersion" />
+		<result column="industry" property="industry" />
+		<result column="emp_num" property="empNum" />
+		<result column="company_gen_manager" property="companyGenManager" />	
+		<result column="company_manager_secretary" property="companyManagerSecretary" />
+		<result column="city_level_1" property="cityLevel1" />
+		<result column="city_level_2" property="cityLevel2" />
+		<result column="reg_city" property="regCity" />	
+		<result column="job_city" property="jobCity" />
+		<result column="zip_code" property="zipCode" />
+		<result column="company_tel" property="companyTel" />
+		<result column="fax_num" property="faxNum" />	
+		<result column="mail_account" property="mailAccount" />
+		<result column="company_url" property="companyUrl" />
+		<result column="audit_org" property="auditOrg" />
+		<result column="law_consultant" property="lawConsultant" />
+		<result column="bus_analysis" property="busAnalysis" />	
+		<result column="company_brief" property="companyBrief" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+		id,stock_no,company_name,company_e_name
+		,once_name,company_info,company_create_date,company_no
+		,company_reg_money,company_legal_persion,industry
+		,emp_num,company_gen_manager,company_manager_secretary,city_level_1
+		,city_level_2,reg_city,job_city,zip_code,company_tel
+		,fax_num,mail_account,company_url,audit_org,law_consultant,bus_analysis,company_brief,update_time
+    </sql>
+    
+	<insert id="saveCompanyInfo" parameterType="com.badboy.stock.bean.company.CompanyInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into company_info(
+			<include refid="Base_Column_List"></include>
+  		 )
+		values
+		(null,#{stockNo}, #{companyName}, #{companyEName}, #{onceName},
+		 #{companyInfo}, #{companyCreateDate}, #{companyNo}, #{companyRegMoney}, #{companyLegalPersion},
+		 #{industry}, #{empNum}, #{companyGenManager}, #{companyManagerSecretary}, #{cityLevel1},
+		 #{cityLevel2}, #{regCity}, #{jobCity}, #{zipCode}, #{companyTel},
+		 #{faxNum}, #{mailAccount}, #{companyUrl}, #{auditOrg}, #{lawConsultant},
+		 #{busAnalysis}, #{companyBrief}, #{updateTime}
+		 )
+	</insert>
+</mapper>
